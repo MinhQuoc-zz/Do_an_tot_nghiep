@@ -43,6 +43,7 @@ CREATE TABLE Products (
     price DECIMAL(10,2) NOT NULL,
     unit VARCHAR(50),
     stock_quantity INT NOT NULL,
+	image_url VARCHAR(500),
     manufacture_date DATE,
     expiry_date DATE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -168,11 +169,11 @@ INSERT INTO Suppliers (supplier_name, supplier_address, supplier_phone) VALUES
 ('Công ty B', 'TP.HCM', '0987654321');
 
 -- Dữ liệu cho bảng Products
-INSERT INTO Products (product_name, category_id, supplier_id, price, unit, stock_quantity, manufacture_date, expiry_date, description) VALUES
-('Coca Cola', 1, 1, 10000, 'chai', 100, '2024-01-01', '2025-01-01', 'Nước giải khát'),
-('Pepsi', 1, 1, 10000, 'chai', 80, '2024-01-05', '2025-01-05', 'Nước giải khát'),
-('Bánh Chocopie', 4, 2, 25000, 'hộp', 50, '2024-02-01', '2025-02-01', 'Bánh ngọt'),
-('Muối i-ốt', 3, 2, 5000, 'gói', 200, '2024-03-01', '2026-03-01', 'Gia vị');
+INSERT INTO Products (product_name, category_id, supplier_id, price, unit, stock_quantity, manufacture_date, expiry_date, description,image_url) VALUES
+('Coca Cola', 1, 1, 10000, 'chai', 100, '2024-01-01', '2025-01-01', 'Nước giải khát','https://example.com/images/coca_cola.jpg'),
+('Pepsi', 1, 1, 10000, 'chai', 80, '2024-01-05', '2025-01-05', 'Nước giải khát','https://example.com/images/coca_cola.jpg'),
+('Bánh Chocopie', 4, 2, 25000, 'hộp', 50, '2024-02-01', '2025-02-01', 'Bánh ngọt','https://example.com/images/coca_cola.jpg'),
+('Muối i-ốt', 3, 2, 5000, 'gói', 200, '2024-03-01', '2026-03-01', 'Gia vị','https://example.com/images/coca_cola.jpg');
 
 -- Dữ liệu cho bảng Discounts
 INSERT INTO Discounts (product_id, discount_percentage, start_date, end_date) VALUES
