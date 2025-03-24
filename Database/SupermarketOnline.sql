@@ -118,6 +118,7 @@ CREATE TABLE Deliveries (
     delivery_address TEXT NOT NULL,
     delivery_phone VARCHAR(20) NOT NULL CHECK (delivery_phone REGEXP '^[0-9]{10,15}$'),
     delivery_status ENUM('pending', 'shipped', 'delivered', 'failed') DEFAULT 'pending',
+    expected_delivery_date DATE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (order_id) REFERENCES Orders(order_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -149,3 +150,68 @@ BEGIN
     END IF;
 END $$
 DELIMITER ;
+
+-- Dữ liệu cho bảng Users
+INSERT INTO Users (full_name, date_of_birth, email, phone, address, username, password, role) VALUES
+('Nguyễn Văn A', '1990-01-15', 'nguyenvana@gmail.com', '0912345678', 'Hà Nội', 'nguyenvana', 'pass123', 'Customer'),
+('Trần Thị B', '1995-06-20', 'tranthib@gmail.com', '0987654321', 'TP.HCM', 'tranthib', 'pass123', 'Customer'),
+('Lê Văn C', '1988-04-10', 'levanc@gmail.com', '0978123456', 'Đà Nẵng', 'levanc', 'pass123', 'Customer'),
+('Phạm Thị D', '2000-09-25', 'phamthid@gmail.com', '0967456789', 'Hải Phòng', 'phamthid', 'pass123', 'Admin');
+
+-- Dữ liệu cho bảng Categories
+INSERT INTO Categories (category_name) VALUES
+('Đồ uống'), ('Thực phẩm'), ('Gia vị'), ('Bánh kẹo');
+
+-- Dữ liệu cho bảng Suppliers
+INSERT INTO Suppliers (supplier_name, supplier_address, supplier_phone) VALUES
+('Công ty A', 'Hà Nội', '0912345678'),
+('Công ty B', 'TP.HCM', '0987654321');
+
+-- Dữ liệu cho bảng Products
+INSERT INTO Products (product_name, category_id, supplier_id, price, unit, stock_quantity, manufacture_date, expiry_date, description) VALUES
+('Coca Cola', 1, 1, 10000, 'chai', 100, '2024-01-01', '2025-01-01', 'Nước giải khát'),
+('Pepsi', 1, 1, 10000, 'chai', 80, '2024-01-05', '2025-01-05', 'Nước giải khát'),
+('Bánh Chocopie', 4, 2, 25000, 'hộp', 50, '2024-02-01', '2025-02-01', 'Bánh ngọt'),
+('Muối i-ốt', 3, 2, 5000, 'gói', 200, '2024-03-01', '2026-03-01', 'Gia vị');
+
+-- Dữ liệu cho bảng Discounts
+INSERT INTO Discounts (product_id, discount_percentage, start_date, end_date) VALUES
+(1, 10, '2024-03-01', '2024-03-15'),
+(3, 5, '2024-04-01', '2024-04-10');
+
+-- Dữ liệu cho bảng Orders
+INSERT INTO Orders (user_id, total_amount, status, payment_id) VALUES
+(1, 20000, 'created', NULL),
+(2, 50000, 'running', NULL),
+(3, 75000, 'done', NULL);
+
+-- Dữ liệu cho bảng OrderDetails
+INSERT INTO OrderDetails (order_id, product_id, quantity, item_price) VALUES
+(1, 1, 2, 10000),
+(2, 3, 2, 25000),
+(3, 4, 3, 5000);
+
+-- Dữ liệu cho bảng Cart
+INSERT INTO Cart (user_id, product_id, quantity) VALUES
+(1, 2, 3),
+(2, 3, 1),
+(3, 1, 2);
+
+-- Dữ liệu cho bảng Payments
+INSERT INTO Payments (order_id, payment_method, payment_status, transaction_id) VALUES
+(1, 'credit_card', 'completed', 'TXN12345'),
+(2, 'paypal', 'pending', 'TXN67890'),
+(3, 'cash_on_delivery', 'completed', NULL);
+
+-- Dữ liệu cho bảng Deliveries
+INSERT INTO Deliveries (order_id, delivery_address, delivery_phone, delivery_status, expected_delivery_date) VALUES
+(1, 'Hà Nội', '0912345678', 'shipped', '2024-03-10'),
+(2, 'TP.HCM', '0987654321', 'pending', '2024-03-15'),
+(3, 'Đà Nẵng', '0978123456', 'delivered', '2024-03-05');
+
+-- Dữ liệu cho bảng Reviews
+INSERT INTO Reviews (user_id, product_id, rating, comment) VALUES
+(1, 1, 5, 'Rất ngon'),
+(2, 3, 4, 'Hương vị tuyệt vời'),
+(3, 4, 3, 'Bình thường');
+
